@@ -1,0 +1,54 @@
+@model IEnumerable<foodie_mvc.Models.OrderStatus>
+
+@{
+    ViewData["Title"] = "Ordered Status";
+}
+
+<h1>Ordered Status</h1>
+
+<p>
+    <div class="row">
+        <div class="col-lg-6">
+            <a asp-action="Create" class="btn btn-success">Create New</a>
+        </div>
+        <form class="form-inline mr-auto w-50 navbar-search" asp-controller="OrderStatus" asp-action="Index" method="get">
+            <div class="input-group">
+                <input type="text" name="Search" class="form-control bg-light border-0 small" placeholder="Search for..."
+                    aria-label="Search" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <input type="submit" value="Filter" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StatusName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Active)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StatusName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Active)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.StatusId" class="btn btn-primary">Edit</a>  
+                <a asp-action="Details" asp-route-id="@item.StatusId" class="btn btn-secondary">Details</a>  
+                <a asp-action="Delete" asp-route-id="@item.StatusId" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
