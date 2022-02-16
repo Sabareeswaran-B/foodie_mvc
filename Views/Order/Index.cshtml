@@ -22,51 +22,53 @@
         </form>
     </div>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Active)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderStatusNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Active)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderStatusNavigation!.StatusId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User!.UserId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.OrderId" class="btn btn-primary">Edit</a>  
-                <a asp-action="Details" asp-route-id="@item.OrderId" class="btn btn-secondary">Details</a>  
-                <a asp-action="Delete" asp-route-id="@item.OrderId" class="btn btn-danger">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="tableCard shadow p-3 mt-5" style="border-radius: 25px; overflow-x: scroll;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OrderedAt)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Active)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OrderStatusNavigation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.User)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderedAt)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Active)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderStatusNavigation!.StatusId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User!.UserId)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.OrderId" class="btn btn-primary">Edit</a>  
+                        <a asp-action="Details" asp-route-id="@item.OrderId" class="btn btn-secondary">Details</a>  
+                        <a asp-action="Delete" asp-route-id="@item.OrderId" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+        }
+            </tbody>
+    </table>
+</div>

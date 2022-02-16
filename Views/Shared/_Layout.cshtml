@@ -46,13 +46,22 @@
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse mt-4 shadow">
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">
-                                <span data-feather="home"></span>
-                                Dashboard
-                            </a>
-                            <hr>
-                        </li>
+                        @{
+                            if (ViewContext.RouteData.Values["Controller"]!.ToString() == "Home")
+                            {
+                                <li class="nav-item active">
+                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="Home"
+                                asp-action="Index">Home</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="Home"
+                                asp-action="Index">Home</a>
+                                </li>
+                            }
+                        }
                         @{
                             if (ViewContext.RouteData.Values["Controller"]!.ToString() == "User")
                             {
@@ -247,11 +256,12 @@
         </div>
     </div>
 
-    <footer class="border-top footer text-muted mt-5">
+    @* <footer class="border-top footer text-muted mt-5">
         <div class="container">
             &copy; 2022 - foodie_mvc - <a asp-area="" asp-controller="Controller" asp-action="Index">Index</a>
         </div>
-    </footer>
+    </footer> *@
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

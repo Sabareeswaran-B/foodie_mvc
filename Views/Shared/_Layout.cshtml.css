@@ -151,11 +151,19 @@ body {
 }
 
 table{
-  overflow: scroll;
-  width: fit-content;
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
 }
 
 .active {
   background-color: #51e6fd;
   border-right: 5px solid #6610f2;
+}
+
+.tableCard {
+  background-color: white;
+  border-radius: 50%;
+  padding: 10px;
+  overflow-x: scroll;
 }
