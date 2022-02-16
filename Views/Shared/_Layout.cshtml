@@ -27,9 +27,10 @@
         #user {
             background-color: white;
             border-radius: 50px;
-            height: 60%;
+            height: 70%;
             margin-right: 50px;
             padding-top: 4px;
+            padding-bottom: 4px;
             text-overflow: ellipsis;
             max-width: 250px;
             cursor: pointer;
@@ -43,9 +44,9 @@
             background-color: white;
             z-index: 2;
             width: 19%;
-            height: 300px;
             align-items: center;
             border-radius: 20px;
+            padding: 15px;
         }
 
         .show {
@@ -79,16 +80,24 @@
                 </div> *@
             <div class="row shadow" id="user" onclick="clickHandle()">
                 <div class="col-3">
-                    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
-                    style="border-radius: 50%; max-height: 35px">
+                    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="img-rounded img-responsive"
+                    style="max-height: 35px">
                 </div>
                 <div class="col-9 text-nowrap"
                 style="margin-top: auto; margin-bottom: auto; overflow: hidden; text-overflow: ellipsis;">
-                    @User.Identity.Name!
+                    @User.Identity.Name
                 </div>
-                <div class="profileCard shadow" id="profileCard">
-                    <a class="nav-link text-light btn btn-danger" style="padding: 5px 20px 5px 20px;color: #fff; margin-top: auto" asp-area=""
-                    asp-controller="Account" asp-action="Logout">Logout</a>
+                <div class="profileCard shadow text-center" id="profileCard">
+                    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="img-rounded img-responsive"
+                    style="max-height: 125px; padding: 10px">
+                    <div style="overflow: hidden; text-overflow: ellipsis;" class="text-nowrap">
+                        @User.Identity.Name
+                    </div>
+                    
+                    <div style="margin-top: 25px;">
+                        <a class="nav-link text-light btn btn-danger" style="padding: 5px 15px 5px 15px;color: #fff;"
+                        asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
+                    </div>
                 </div>
             </div>
         }

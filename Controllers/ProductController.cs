@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using foodie_mvc.Models;
@@ -33,6 +34,7 @@ namespace foodie_mvc.Controllers
         }
 
         // GET: Product/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -54,6 +56,7 @@ namespace foodie_mvc.Controllers
         }
 
         // GET: Product/Create
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["DiscountId"] = new SelectList(_context.Discounts, "DiscountId", "DiscountId");
@@ -67,6 +70,7 @@ namespace foodie_mvc.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("ProductId,ProductName,QuantityAvailable,StoreId,TypeId,Mrp,SpecialPrice,Active,DiscountId")] Product product)
         {
             if (ModelState.IsValid)
@@ -82,6 +86,7 @@ namespace foodie_mvc.Controllers
         }
 
         // GET: Product/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -105,6 +110,7 @@ namespace foodie_mvc.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,QuantityAvailable,StoreId,TypeId,Mrp,SpecialPrice,Active,DiscountId")] Product product)
         {
             if (id != product.ProductId)
@@ -139,6 +145,7 @@ namespace foodie_mvc.Controllers
         }
 
         // GET: Product/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -162,6 +169,7 @@ namespace foodie_mvc.Controllers
         // POST: Product/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var product = await _context.Products.FindAsync(id);
@@ -170,6 +178,7 @@ namespace foodie_mvc.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize]
         private bool ProductExists(int id)
         {
             return _context.Products.Any(e => e.ProductId == id);

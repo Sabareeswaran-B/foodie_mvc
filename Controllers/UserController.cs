@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using foodie_mvc.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace foodie_mvc.Controllers
 {
@@ -33,6 +34,7 @@ namespace foodie_mvc.Controllers
         }
 
         // GET: User/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -51,6 +53,7 @@ namespace foodie_mvc.Controllers
         }
 
         // GET: User/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -73,6 +76,7 @@ namespace foodie_mvc.Controllers
         }
 
         // GET: User/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -93,6 +97,7 @@ namespace foodie_mvc.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("UserId,UserName,RegNo,PhoneNo,Balance,Active,UserRole,PassWord")] User user)
         {
             if (id != user.UserId)
@@ -124,6 +129,7 @@ namespace foodie_mvc.Controllers
         }
 
         // GET: User/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -144,6 +150,7 @@ namespace foodie_mvc.Controllers
         // POST: User/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var user = await _context.Users.FindAsync(id);
@@ -152,6 +159,7 @@ namespace foodie_mvc.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize]
         private bool UserExists(int id)
         {
             return _context.Users.Any(e => e.UserId == id);

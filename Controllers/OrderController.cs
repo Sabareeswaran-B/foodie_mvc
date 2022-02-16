@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using foodie_mvc.Models;
@@ -27,6 +28,7 @@ namespace foodie_mvc.Controllers
         }
 
         // GET: Order/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -47,6 +49,7 @@ namespace foodie_mvc.Controllers
         }
 
         // GET: Order/Create
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["OrderStatus"] = new SelectList(_context.OrderStatuses, "StatusId", "StatusId");
@@ -59,6 +62,7 @@ namespace foodie_mvc.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("OrderId,UserId,TotalPrice,OrderedAt,Active,OrderStatus")] Order order)
         {
             if (ModelState.IsValid)
@@ -73,6 +77,7 @@ namespace foodie_mvc.Controllers
         }
 
         // GET: Order/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -95,6 +100,7 @@ namespace foodie_mvc.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("OrderId,UserId,TotalPrice,OrderedAt,Active,OrderStatus")] Order order)
         {
             if (id != order.OrderId)
@@ -128,6 +134,7 @@ namespace foodie_mvc.Controllers
         }
 
         // GET: Order/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -150,6 +157,7 @@ namespace foodie_mvc.Controllers
         // POST: Order/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var order = await _context.Orders.FindAsync(id);
@@ -158,6 +166,7 @@ namespace foodie_mvc.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize]
         private bool OrderExists(int id)
         {
             return _context.Orders.Any(e => e.OrderId == id);

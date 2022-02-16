@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using foodie_mvc.Models;
 
 namespace foodie_mvc.Controllers
 {
+        [Authorize]
     public class CartController : Controller
     {
         private readonly foodieContext _context;
@@ -27,6 +29,7 @@ namespace foodie_mvc.Controllers
         }
 
         // GET: Cart/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -47,6 +50,7 @@ namespace foodie_mvc.Controllers
         }
 
         // GET: Cart/Create
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId");
@@ -73,6 +77,7 @@ namespace foodie_mvc.Controllers
         }
 
         // GET: Cart/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -95,6 +100,7 @@ namespace foodie_mvc.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("CartId,UserId,ProductId,Quantity,TotalPrice,Active")] Cart cart)
         {
             if (id != cart.CartId)
@@ -128,6 +134,7 @@ namespace foodie_mvc.Controllers
         }
 
         // GET: Cart/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -150,6 +157,7 @@ namespace foodie_mvc.Controllers
         // POST: Cart/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var cart = await _context.Carts.FindAsync(id);
@@ -158,6 +166,7 @@ namespace foodie_mvc.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize]
         private bool CartExists(int id)
         {
             return _context.Carts.Any(e => e.CartId == id);

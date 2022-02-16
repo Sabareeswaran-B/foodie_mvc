@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using foodie_mvc.Models;
@@ -26,6 +27,7 @@ namespace foodie_mvc.Controllers
         }
 
         // GET: Discount/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,6 +46,7 @@ namespace foodie_mvc.Controllers
         }
 
         // GET: Discount/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -54,6 +57,7 @@ namespace foodie_mvc.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("DiscountId,DiscountName,DiscountAmount,MaxDiscount,Validity,Active")] Discount discount)
         {
             if (ModelState.IsValid)
@@ -66,6 +70,7 @@ namespace foodie_mvc.Controllers
         }
 
         // GET: Discount/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -86,6 +91,7 @@ namespace foodie_mvc.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("DiscountId,DiscountName,DiscountAmount,MaxDiscount,Validity,Active")] Discount discount)
         {
             if (id != discount.DiscountId)
@@ -117,6 +123,7 @@ namespace foodie_mvc.Controllers
         }
 
         // GET: Discount/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -137,6 +144,7 @@ namespace foodie_mvc.Controllers
         // POST: Discount/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var discount = await _context.Discounts.FindAsync(id);
@@ -145,6 +153,7 @@ namespace foodie_mvc.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize]
         private bool DiscountExists(int id)
         {
             return _context.Discounts.Any(e => e.DiscountId == id);
