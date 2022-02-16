@@ -11,17 +11,15 @@
     <div class="col-6">
         <a asp-action="Create" class="btn btn-success">Create New</a>
     </div>
-    <div class="col-lg-6 col-md-12 col-sm-12">
-        <form class="form-inline mr-auto w-50 navbar-search" asp-controller="User" asp-action="Index" method="get">
-            <div class="input-group">
-                <input type="text" name="Search" class="form-control bg-light border-0 small"
-                    placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                    <input type="submit" value="Filter" class="btn btn-primary" />
-                </div>
+    <form class="form-inline mr-auto w-50 navbar-search" asp-controller="User" asp-action="Index" method="get">
+        <div class="input-group">
+            <input type="text" name="Search" class="form-control bg-light border-0 small" placeholder="Search for..."
+                aria-label="Search" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <input type="submit" value="Filter" class="btn btn-primary" />
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>
 </p>
 <div class="tableCard shadow p-3 mt-5" style="border-radius: 25px; overflow-x: auto;">
