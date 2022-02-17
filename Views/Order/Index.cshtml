@@ -23,7 +23,7 @@
     </div>
 </p>
 <div class="tableCard shadow p-3 mt-5" style="border-radius: 25px; overflow-x: auto;">
-    <table class="table">
+    <table class="table table-stripe table-hover">
         <thead>
             <tr>
                 <th>
@@ -51,7 +51,7 @@
                         @Html.DisplayFor(modelItem => item.TotalPrice)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.OrderedAt)
+                        @Html.DisplayFor(modelItem => item.OrderedAt, "{0:dd/MM/yyyy}")
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Active)

@@ -23,7 +23,20 @@ namespace foodie_mvc.Controllers
         // GET: Store
         public async Task<IActionResult> Index(string Search)
         {
-            var stores = from pt in _context.Stores select pt;
+            var stores = from st in _context.Stores 
+            join ad in _context.Users on st.AdminId equals ad.UserId 
+            join stype in _context.StoreTypes on st.StoreType equals stype.StoreTypeId
+            select new Store{
+                StoreId= st.StoreId,
+                StoreName = st.StoreName,
+                StoreAddress = st.StoreAddress,
+                StoreType = st.StoreType,
+                AdminId = ad.UserId,
+                Admin = ad,
+                OwnerName = st.OwnerName,
+                Active = st.Active,
+                StoreTypeNavigation = stype
+            };
 
             if (!String.IsNullOrEmpty(Search))
             {

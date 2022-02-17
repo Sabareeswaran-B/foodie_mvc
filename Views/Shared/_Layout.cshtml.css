@@ -1,12 +1,20 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
-a.navbar-brand {
+.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
-  background-color: #5800e8;
+  background-color: #260063;
   color: white;
+}
+.navbar-brand:hover {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+  background-color: #260063;
+  color: white;
+  cursor: pointer;
 }
 
 a {
@@ -158,7 +166,7 @@ table{
 
 .active {
   background-color: #51e6fd;
-  border-right: 5px solid #6610f2;
+  border-right: 5px solid #260063;
 }
 
 .tableCard {
@@ -166,4 +174,5 @@ table{
   border-radius: 50%;
   padding: 10px;
   overflow-x: scroll;
+
 }

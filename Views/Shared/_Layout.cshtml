@@ -62,9 +62,12 @@
 
 <body>
     <header class="navbar navbar-light sticky-top bg-white flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" style="height: 70px;" href="#">
-            <h3>Food!e360</h3>
-        </a>
+        <div class="navbar-brand col-md-3 col-lg-2 me-0 px-3" style="height: 70px;">
+            <a asp-action="Index" asp-controller="Home" class="text-light"
+                style="text-decoration: none; display: inline; font-size: 24px; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">
+                Food!e36</a>
+            <img src="/images/logo.png" class="mb-2" style="height: 30px; display:inline; margin-left: -5px" />
+        </div>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
             data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -93,8 +96,8 @@
                     <div style="overflow: hidden; text-overflow: ellipsis;" class="text-nowrap">
                         @User.Identity.Name
                     </div>
-                    
-                    <div style="margin-top: 25px;">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Profile">View Profile</a>
+                    <div style="margin-top: 20px;">
                         <a class="nav-link text-light btn btn-danger" style="padding: 5px 15px 5px 15px;color: #fff;"
                         asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
                     </div>
@@ -104,8 +107,8 @@
         else
         {
             <div class="navbar-nav">
-                <div class="nav-item text-nowrap btn btn" style="margin-right: 15px;">
-                    <a class="nav-link text-light btn btn-primary" style="padding: 5px 20px 5px 20px;color: #fff"
+                <div class="nav-item text-nowrap btn" style="margin-right: 15px;">
+                    <a class="nav-link text-light btn btn-primary" style="padding: 5px 20px 5px 20px;color: #fff;"
                     asp-area="" asp-controller="Account" asp-action="Login">Login</a>
                 </div>
             </div>
@@ -214,6 +217,22 @@
                             }
                         }
                         @{
+                            if (ViewContext.RouteData.Values["Controller"]!.ToString() == "Cart")
+                            {
+                                <li class="nav-item active">
+                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="Cart"
+                                asp-action="Index">Cart</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="Cart"
+                                asp-action="Index">Cart</a>
+                                </li>
+                            }
+                        }
+                        @{
                             if (ViewContext.RouteData.Values["Controller"]!.ToString() == "Order")
                             {
                                 <li class="nav-item active">
@@ -280,7 +299,7 @@
 
                     </ul>
 
-                    <h6
+                    @* <h6
                         class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                         <span>Saved reports</span>
                         <a class="link-secondary" href="#" aria-label="Add a new report">
@@ -312,7 +331,7 @@
                                 Delete
                             </a>
                         </li>
-                    </ul>
+                    </ul> *@
                 </div>
             </nav>
 
@@ -332,11 +351,16 @@
                             @{
                                 IgnoreBody();
                             }
-                            <h3 style="color: grey;">Please login to access this content!</h3><br>
-                            <a class="btn btn-primary fw-bold" style="padding: 5px 30px 5px 30px;" asp-action="Login"
-                            asp-controller="Account">
-                                Login
-                            </a>
+                            <div class="shadow p-5" style="border-radius: 25px; max-width: 60%; margin:auto">
+                                <br>
+                                <h3 style="color: grey;">Please login to access this content!</h3>
+                                <br><br>
+                                <a class="btn btn-primary fw-bold" style="width: 50%" asp-action="Login"
+                                asp-controller="Account">
+                                    Login
+                                </a>
+                                <br><br>
+                            </div>
                         </main>
                     </div>
                 }

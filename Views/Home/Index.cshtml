@@ -1,8 +1,68 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<script>
+    window.onload = function () {
+
+        var barChart = new CanvasJS.Chart("barChart", {
+            animationEnabled: true,
+            title: {
+                text: "Food!e360"
+            },
+            axisY: {
+                title: "Number of Data",
+                gridThickness: 0
+            },
+            data: [{
+                type: "bar",
+                indexLabel: "{y}",
+                dataPoints: @Html.Raw(ViewBag.BarChart)
+            }]
+        });
+        barChart.render();
+
+        var splineChart = new CanvasJS.Chart("splineChart", {
+            animationEnabled: true,
+            title: {
+                text: "Orders over the month"
+            },
+            axisX: {
+                valueFormatString: "DD MMM"
+            },
+            axisY: {
+                title: "Sales (in INR)",
+                prefix: "₹"
+            },
+            data: [{
+                type: "spline",
+                xValueType: "dateTime",
+                xValueFormatString: "DD MMM",
+                yValueFormatString: "$#,###",					
+                dataPoints: @Html.Raw(ViewBag.SplineChart)
+            }]
+        });
+        splineChart.render();
+
+    }
+</script>
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @{
+        if (User.Identity!.IsAuthenticated)
+        {
+            <div class="shadow p-5" style="border-radius: 25px">
+                <div id="barChart" style="height: 370px; width: 100%;"></div>
+                <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+            </div>
+            <div class="shadow p-5 mt-5" style="border-radius: 25px">
+                <div id="splineChart" style="height: 370px; width: 100%;"></div>
+                <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+            </div>
+        }
+        else
+        {
+            <h1 class="display-4">Welcome to Food!e360</h1>
+            <p>Please <a asp-action = "Login" asp-controller = "Account" >Login</a>.</p>
+        }
+    }
 </div>

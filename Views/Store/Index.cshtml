@@ -23,7 +23,7 @@
 </div>
 </p>
 <div class="tableCard shadow p-3 mt-5" style="border-radius: 25px; overflow-x: auto;">
-    <table class="table">
+    <table class="table table-stripe table-hover">
         <thead>
             <tr>
                 <th>
@@ -64,10 +64,10 @@
                         @Html.DisplayFor(modelItem => item.StoreName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Admin!.UserId)
+                        @Html.DisplayFor(modelItem => item.Admin!.UserName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.StoreTypeNavigation!.StoreTypeId)
+                        @Html.DisplayFor(modelItem => item.StoreTypeNavigation!.StoreType1)
                     </td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.StoreId" class="btn btn-primary">Edit</a>

@@ -15,6 +15,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SQlServer" Version="6.0.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.2" />
+    <PackageReference Include="Newtonsoft.json" Version="13.0.1" />
   </ItemGroup>
 
 </Project>

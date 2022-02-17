@@ -11,7 +11,6 @@ using foodie_mvc.Models;
 
 namespace foodie_mvc.Controllers
 {
-        [Authorize]
     public class CartController : Controller
     {
         private readonly foodieContext _context;

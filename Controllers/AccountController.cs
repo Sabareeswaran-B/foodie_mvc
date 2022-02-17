@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Auth0.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using foodie_mvc.Models;
+using System.Security.Claims;
 
 namespace foodie_mvc.Controllers
 {
@@ -32,6 +34,19 @@ namespace foodie_mvc.Controllers
                 authenticationProperties
             );
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        }
+
+        [Authorize]
+        public IActionResult Profile()
+        {
+            return View(
+                new UserProfile()
+                {
+                    Name = User.Identity!.Name,
+                    EmailAddress = User.FindFirst(c => c.Type == ClaimTypes.Email)?.Value,
+                    ProfileImage = User.FindFirst(c => c.Type == "picture")?.Value
+                }
+            );
         }
     }
 }
