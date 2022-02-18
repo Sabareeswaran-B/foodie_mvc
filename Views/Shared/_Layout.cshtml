@@ -122,7 +122,7 @@
     </header>
     <div class="container-fluid">
         <div class="row">
-            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse mt-4 shadow">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar sidebar-sticky collapse mt-4 shadow">
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
                         @{
@@ -156,7 +156,7 @@
                                 asp-action="Index">User</a>
                                 </li>
                             }
-                        }<hr>
+                        }
                         @{
                             if (ViewContext.RouteData.Values["Controller"]!.ToString() == "StoreType")
                             {
@@ -189,7 +189,7 @@
                                 asp-action="Index">Store</a>
                                 </li>
                             }
-                        }<hr>
+                        }
                         @{
                             if (ViewContext.RouteData.Values["Controller"]!.ToString() == "ProductType")
                             {
@@ -221,7 +221,7 @@
                                 asp-action="Index">Product</a>
                                 </li>
                             }
-                        }<hr>
+                        }
                         @{
                             if (ViewContext.RouteData.Values["Controller"]!.ToString() == "Cart")
                             {
@@ -285,7 +285,7 @@
                                 asp-action="Index">OrderStatus</a>
                                 </li>
                             }
-                        }<hr>
+                        }
                         @{
                             if (ViewContext.RouteData.Values["Controller"]!.ToString() == "Discount")
                             {
