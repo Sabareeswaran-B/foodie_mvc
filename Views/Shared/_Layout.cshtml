@@ -34,6 +34,12 @@
             text-overflow: ellipsis;
             max-width: 250px;
             cursor: pointer;
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+        }
+
+        #user:active {
+            background-color: white;
+            box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
         }
 
         .profileCard {
@@ -81,7 +87,7 @@
                 asp-controller="Account" asp-action="Logout">Logout</a>
                 </div>
                 </div> *@
-            <div class="row shadow" id="user" onclick="clickHandle()">
+            <div class="row" id="user" onclick="clickHandle()">
                 <div class="col-3">
                     <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="img-rounded img-responsive"
                     style="max-height: 35px">
@@ -150,7 +156,7 @@
                                 asp-action="Index">User</a>
                                 </li>
                             }
-                        }
+                        }<hr>
                         @{
                             if (ViewContext.RouteData.Values["Controller"]!.ToString() == "StoreType")
                             {
@@ -183,7 +189,7 @@
                                 asp-action="Index">Store</a>
                                 </li>
                             }
-                        }
+                        }<hr>
                         @{
                             if (ViewContext.RouteData.Values["Controller"]!.ToString() == "ProductType")
                             {
@@ -215,7 +221,7 @@
                                 asp-action="Index">Product</a>
                                 </li>
                             }
-                        }
+                        }<hr>
                         @{
                             if (ViewContext.RouteData.Values["Controller"]!.ToString() == "Cart")
                             {
@@ -264,6 +270,22 @@
                                 </li>
                             }
                         }
+                        @{
+                            if (ViewContext.RouteData.Values["Controller"]!.ToString() == "OrderStatus")
+                            {
+                                <li class="nav-item active">
+                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="OrderStatus"
+                                asp-action="Index">OrderStatus</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="OrderStatus"
+                                asp-action="Index">OrderStatus</a>
+                                </li>
+                            }
+                        }<hr>
                         @{
                             if (ViewContext.RouteData.Values["Controller"]!.ToString() == "Discount")
                             {

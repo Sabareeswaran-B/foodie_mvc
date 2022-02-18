@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using foodie_mvc.Models;
+using System.Security.Claims;
 
 namespace foodie_mvc.Controllers;
 using System.Runtime.Serialization;
@@ -64,12 +65,15 @@ public class HomeController : Controller
         var products = (from p in _context.Products select p).Count();
         var orders = (from p in _context.Orders select p).Count();
 
-        var dailyOrders = from o in _context.Orders select new Order{
-            OrderedAt = ((DateTime)o.OrderedAt!).Date,
-            TotalPrice = o.TotalPrice,
-            OrderId = o.OrderId,
-            OrderStatus = o.OrderStatus,
-        };
+        var dailyOrders =
+            from o in _context.Orders
+            select new Order
+            {
+                OrderedAt = ((DateTime)o.OrderedAt!).Date,
+                TotalPrice = o.TotalPrice,
+                OrderId = o.OrderId,
+                OrderStatus = o.OrderStatus,
+            };
         var orderSum = dailyOrders
             // .Where(w => w.OrderStatus != "Cancelled")
             .GroupBy(g => g.OrderedAt)
