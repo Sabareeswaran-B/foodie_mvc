@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Newtonsoft.Json;
+@using Newtonsoft.Json.Linq
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -34,12 +36,12 @@
             text-overflow: ellipsis;
             max-width: 250px;
             cursor: pointer;
-            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+            box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
         }
 
         #user:active {
             background-color: white;
-            box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+            box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075);
         }
 
         .profileCard {
@@ -89,20 +91,28 @@
                 </div> *@
             <div class="row" id="user" onclick="clickHandle()">
                 <div class="col-3">
-                    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="img-rounded img-responsive"
-                    style="max-height: 35px">
+                    @{
+                        TempData.Keep();
+                        string imageSRC = TempData.Peek("Profile")!.ToString()!;
+                        string email = TempData.Peek("Email")!.ToString()!;
+                    }
+                    <img src="@imageSRC" class="img-rounded img-responsive" style="max-height: 35px; border-radius: 50%">
                 </div>
                 <div class="col-9 text-nowrap"
                 style="margin-top: auto; margin-bottom: auto; overflow: hidden; text-overflow: ellipsis;">
                     @User.Identity.Name
                 </div>
                 <div class="profileCard shadow text-center" id="profileCard">
-                    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="img-rounded img-responsive"
-                    style="max-height: 125px; padding: 10px">
+                    <img src="@imageSRC" class="img-rounded img-responsive"
+                    style="max-height: 125px; padding: 10px; border-radius: 50%">
                     <div style="overflow: hidden; text-overflow: ellipsis;" class="text-nowrap">
                         @User.Identity.Name
                     </div>
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Profile">View Profile</a>
+                    <div style="overflow: hidden; text-overflow: ellipsis;" class="text-nowrap">
+                        @email
+                    </div>
+                    @* <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Profile">View
+                        Profile</a> *@
                     <div style="margin-top: 20px;">
                         <a class="nav-link text-light btn btn-danger" style="padding: 5px 15px 5px 15px;color: #fff;"
                         asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
@@ -122,238 +132,35 @@
     </header>
     <div class="container-fluid">
         <div class="row">
-            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar sidebar-sticky collapse mt-4 shadow">
+            <nav id="sidebarMenu"
+                class="col-md-3 col-lg-2 d-md-block bg-light sidebar sidebar-sticky collapse mt-4 shadow">
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
                         @{
-                            if (ViewContext.RouteData.Values["Controller"]!.ToString() == "Home")
-                            {
-                                <li class="nav-item active">
-                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="Home"
-                                asp-action="Index">Home</a>
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="Home"
-                                asp-action="Index">Home</a>
-                                </li>
-                            }
-                        }
-                        @{
-                            if (ViewContext.RouteData.Values["Controller"]!.ToString() == "User")
-                            {
-                                <li class="nav-item active">
-                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="User"
-                                asp-action="Index">User</a>
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="User"
-                                asp-action="Index">User</a>
-                                </li>
-                            }
-                        }
-                        @{
-                            if (ViewContext.RouteData.Values["Controller"]!.ToString() == "StoreType")
-                            {
-                                <li class="nav-item active">
-                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="StoreType"
-                                asp-action="Index">StoreType</a>
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="StoreType"
-                                asp-action="Index">StoreType</a>
-                                </li>
-                            }
+                            var controllers = JArray.Parse(TempData.Peek("Controller")!.ToString()!);
 
-                        }
-                        @{
-                            if (ViewContext.RouteData.Values["Controller"]!.ToString() == "Store")
+                            foreach (var item in controllers)
                             {
-                                <li class="nav-item active">
-                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="Store"
-                                asp-action="Index">Store</a>
-                                </li>
+                                string controller = item["Controller"]!.ToString().Replace("Controller", "");
+                                @* Console.WriteLine(controller); *@
+                                if (ViewContext.RouteData.Values["Controller"]!.ToString() == controller)
+                                {
+                                    <li class="nav-item active">
+                                        <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="@controller"
+                                        asp-action="Index">@controller</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="@controller"
+                                        asp-action="Index">@controller</a>
+                                    </li>
+                                }
                             }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="Store"
-                                asp-action="Index">Store</a>
-                                </li>
-                            }
-                        }
-                        @{
-                            if (ViewContext.RouteData.Values["Controller"]!.ToString() == "ProductType")
-                            {
-                                <li class="nav-item active">
-                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="ProductType"
-                                asp-action="Index">ProductType</a>
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="ProductType"
-                                asp-action="Index">ProductType</a>
-                                </li>
-                            }
-                        }
-                        @{
-                            if (ViewContext.RouteData.Values["Controller"]!.ToString() == "Product")
-                            {
-                                <li class="nav-item active">
-                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="Product"
-                                asp-action="Index">Product</a>
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="Product"
-                                asp-action="Index">Product</a>
-                                </li>
-                            }
-                        }
-                        @{
-                            if (ViewContext.RouteData.Values["Controller"]!.ToString() == "Cart")
-                            {
-                                <li class="nav-item active">
-                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="Cart"
-                                asp-action="Index">Cart</a>
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="Cart"
-                                asp-action="Index">Cart</a>
-                                </li>
-                            }
-                        }
-                        @{
-                            if (ViewContext.RouteData.Values["Controller"]!.ToString() == "Order")
-                            {
-                                <li class="nav-item active">
-                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="Order"
-                                asp-action="Index">Order</a>
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="Order"
-                                asp-action="Index">Order</a>
-                                </li>
-                            }
-                        }
-                        @{
-                            if (ViewContext.RouteData.Values["Controller"]!.ToString() == "OrderedItems")
-                            {
-                                <li class="nav-item active">
-                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="OrderedItems"
-                                asp-action="Index">OrderedItems</a>
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="OrderedItems"
-                                asp-action="Index">OrderedItems</a>
-                                </li>
-                            }
-                        }
-                        @{
-                            if (ViewContext.RouteData.Values["Controller"]!.ToString() == "OrderStatus")
-                            {
-                                <li class="nav-item active">
-                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="OrderStatus"
-                                asp-action="Index">OrderStatus</a>
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="OrderStatus"
-                                asp-action="Index">OrderStatus</a>
-                                </li>
-                            }
-                        }
-                        @{
-                            if (ViewContext.RouteData.Values["Controller"]!.ToString() == "Discount")
-                            {
-                                <li class="nav-item active">
-                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="Discount"
-                                asp-action="Index">Discount</a>
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="Discount"
-                                asp-action="Index">Discount</a>
-                                </li>
-                            }
-                        }
-                        @{
-                            if (ViewContext.RouteData.Values["Controller"]!.ToString() == "TransactionHistory")
-                            {
-                                <li class="nav-item active">
-                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="TransactionHistory"
-                                asp-action="Index">TransactionHistory</a>
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="TransactionHistory"
-                                asp-action="Index">TransactionHistory</a>
-                                </li>
-                            }
-                        }
+                        }                       
 
                     </ul>
-
-                    @* <h6
-                        class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Saved reports</span>
-                        <a class="link-secondary" href="#" aria-label="Add a new report">
-                            <span data-feather="plus-circle"></span>
-                        </a>
-                    </h6>
-                    <ul class="nav flex-column mb-2">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file-text"></span>
-                                Create
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file-text"></span>
-                                Details
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file-text"></span>
-                                Edit
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file-text"></span>
-                                Delete
-                            </a>
-                        </li>
-                    </ul> *@
                 </div>
             </nav>
 

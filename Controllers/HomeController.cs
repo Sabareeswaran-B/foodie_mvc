@@ -5,6 +5,8 @@ using foodie_mvc.Models;
 using System.Security.Claims;
 
 namespace foodie_mvc.Controllers;
+
+using System.Reflection;
 using System.Runtime.Serialization;
 
 public class HomeController : Controller
@@ -57,6 +59,42 @@ public class HomeController : Controller
         List<BarChartDataPoint> barChart = new List<BarChartDataPoint>();
         List<SplineChartDataPoint> splineChart = new List<SplineChartDataPoint>();
 
+        Assembly asm = Assembly.GetExecutingAssembly();
+
+        var controlleractionlist = asm.GetTypes()
+            .Where(type => typeof(Microsoft.AspNetCore.Mvc.Controller).IsAssignableFrom(type))
+            .SelectMany(
+                type =>
+                    type.GetMethods(
+                        BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public
+                    )
+            )
+            .Where(
+                m =>
+                    !m.GetCustomAttributes(
+                            typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute),
+                            true
+                        )
+                        .Any()
+            )
+            .Select(
+                x =>
+                    new
+                    {
+                        Controller = x.DeclaringType!.Name,
+                        Action = x.Name                        
+                    }
+            )
+            .Where(w => w.Action == "Index")
+            .OrderBy(x => x.Controller)
+            .ThenBy(x => x.Action)
+            .ToList();
+        
+        // foreach (var item in controlleractionlist)
+        // {
+        //     Console.WriteLine(item);
+        // }
+
         var users = (from u in _context.Users select u).Count();
         var adminUsers = (from au in _context.Users select au)
             .Where(s => s.UserRole == "admin")
@@ -85,6 +123,13 @@ public class HomeController : Controller
         barChart.Add(new BarChartDataPoint("Product", products));
         barChart.Add(new BarChartDataPoint("Orders", orders));
 
+        var profile = new UserProfile()
+        {
+            Name = User.Identity!.Name,
+            EmailAddress = User.FindFirst(c => c.Type == ClaimTypes.Email)?.Value,
+            ProfileImage = User.FindFirst(c => c.Type == "picture")?.Value
+        };
+
         foreach (var item in orderSum)
         {
             var dt = (DateTime)item.Item1!;
@@ -96,6 +141,9 @@ public class HomeController : Controller
 
         ViewBag.BarChart = JsonConvert.SerializeObject(barChart);
         ViewBag.SplineChart = JsonConvert.SerializeObject(splineChart);
+        TempData["Profile"] = profile.ProfileImage;
+        TempData["Email"] = profile.EmailAddress;
+        TempData["Controller"] = JsonConvert.SerializeObject(controlleractionlist);
         return View();
     }
 
