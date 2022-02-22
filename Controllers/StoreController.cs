@@ -23,24 +23,28 @@ namespace foodie_mvc.Controllers
         // GET: Store
         public async Task<IActionResult> Index(string Search)
         {
-            var stores = from st in _context.Stores 
-            join ad in _context.Users on st.AdminId equals ad.UserId 
-            join stype in _context.StoreTypes on st.StoreType equals stype.StoreTypeId
-            select new Store{
-                StoreId= st.StoreId,
-                StoreName = st.StoreName,
-                StoreAddress = st.StoreAddress,
-                StoreType = st.StoreType,
-                AdminId = ad.UserId,
-                Admin = ad,
-                OwnerName = st.OwnerName,
-                Active = st.Active,
-                StoreTypeNavigation = stype
-            };
+            var stores =
+                from st in _context.Stores
+                join ad in _context.Users on st.AdminId equals ad.UserId
+                join stype in _context.StoreTypes on st.StoreType equals stype.StoreTypeId
+                select new Store
+                {
+                    StoreId = st.StoreId,
+                    StoreName = st.StoreName,
+                    StoreAddress = st.StoreAddress,
+                    StoreType = st.StoreType,
+                    AdminId = ad.UserId,
+                    Admin = ad,
+                    OwnerName = st.OwnerName,
+                    Active = st.Active,
+                    StoreTypeNavigation = stype
+                };
 
             if (!String.IsNullOrEmpty(Search))
             {
-                stores = stores.Where(s => s.StoreName.Contains(Search) || s.OwnerName.Contains(Search));
+                stores = stores.Where(
+                    s => s.StoreName.Contains(Search) || s.OwnerName.Contains(Search)
+                );
             }
 
             return View(await stores.ToListAsync());
@@ -72,7 +76,11 @@ namespace foodie_mvc.Controllers
         public IActionResult Create()
         {
             ViewData["AdminId"] = new SelectList(_context.Users, "UserId", "UserId");
-            ViewData["StoreType"] = new SelectList(_context.StoreTypes, "StoreTypeId", "StoreTypeId");
+            ViewData["StoreType"] = new SelectList(
+                _context.StoreTypes,
+                "StoreTypeId",
+                "StoreTypeId"
+            );
             return View();
         }
 
@@ -82,7 +90,9 @@ namespace foodie_mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create([Bind("StoreId,OwnerName,StoreAddress,AdminId,Active,StoreName,StoreType")] Store store)
+        public async Task<IActionResult> Create(
+            [Bind("StoreId,OwnerName,StoreAddress,AdminId,Active,StoreName,StoreType")] Store store
+        )
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +101,12 @@ namespace foodie_mvc.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AdminId"] = new SelectList(_context.Users, "UserId", "UserId", store.AdminId);
-            ViewData["StoreType"] = new SelectList(_context.StoreTypes, "StoreTypeId", "StoreTypeId", store.StoreType);
+            ViewData["StoreType"] = new SelectList(
+                _context.StoreTypes,
+                "StoreTypeId",
+                "StoreTypeId",
+                store.StoreType
+            );
             return View(store);
         }
 
@@ -110,7 +125,12 @@ namespace foodie_mvc.Controllers
                 return NotFound();
             }
             ViewData["AdminId"] = new SelectList(_context.Users, "UserId", "UserId", store.AdminId);
-            ViewData["StoreType"] = new SelectList(_context.StoreTypes, "StoreTypeId", "StoreTypeId", store.StoreType);
+            ViewData["StoreType"] = new SelectList(
+                _context.StoreTypes,
+                "StoreTypeId",
+                "StoreTypeId",
+                store.StoreType
+            );
             return View(store);
         }
 
@@ -120,7 +140,10 @@ namespace foodie_mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Edit(int id, [Bind("StoreId,OwnerName,StoreAddress,AdminId,Active,StoreName,StoreType")] Store store)
+        public async Task<IActionResult> Edit(
+            int id,
+            [Bind("StoreId,OwnerName,StoreAddress,AdminId,Active,StoreName,StoreType")] Store store
+        )
         {
             if (id != store.StoreId)
             {
@@ -148,7 +171,12 @@ namespace foodie_mvc.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AdminId"] = new SelectList(_context.Users, "UserId", "UserId", store.AdminId);
-            ViewData["StoreType"] = new SelectList(_context.StoreTypes, "StoreTypeId", "StoreTypeId", store.StoreType);
+            ViewData["StoreType"] = new SelectList(
+                _context.StoreTypes,
+                "StoreTypeId",
+                "StoreTypeId",
+                store.StoreType
+            );
             return View(store);
         }
 

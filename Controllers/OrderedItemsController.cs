@@ -63,7 +63,9 @@ namespace foodie_mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create([Bind("ItemId,OrderId,ProductId,Quantity,Active")] OrderedItems OrderedItems)
+        public async Task<IActionResult> Create(
+            [Bind("ItemId,OrderId,ProductId,Quantity,Active")] OrderedItems OrderedItems
+        )
         {
             if (ModelState.IsValid)
             {
@@ -71,8 +73,18 @@ namespace foodie_mvc.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OrderId"] = new SelectList(_context.Orders, "OrderId", "OrderId", OrderedItems.OrderId);
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", OrderedItems.ProductId);
+            ViewData["OrderId"] = new SelectList(
+                _context.Orders,
+                "OrderId",
+                "OrderId",
+                OrderedItems.OrderId
+            );
+            ViewData["ProductId"] = new SelectList(
+                _context.Products,
+                "ProductId",
+                "ProductId",
+                OrderedItems.ProductId
+            );
             return View(OrderedItems);
         }
 
@@ -90,8 +102,18 @@ namespace foodie_mvc.Controllers
             {
                 return NotFound();
             }
-            ViewData["OrderId"] = new SelectList(_context.Orders, "OrderId", "OrderId", OrderedItems.OrderId);
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", OrderedItems.ProductId);
+            ViewData["OrderId"] = new SelectList(
+                _context.Orders,
+                "OrderId",
+                "OrderId",
+                OrderedItems.OrderId
+            );
+            ViewData["ProductId"] = new SelectList(
+                _context.Products,
+                "ProductId",
+                "ProductId",
+                OrderedItems.ProductId
+            );
             return View(OrderedItems);
         }
 
@@ -101,7 +123,10 @@ namespace foodie_mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Edit(int id, [Bind("ItemId,OrderId,ProductId,Quantity,Active")] OrderedItems OrderedItems)
+        public async Task<IActionResult> Edit(
+            int id,
+            [Bind("ItemId,OrderId,ProductId,Quantity,Active")] OrderedItems OrderedItems
+        )
         {
             if (id != OrderedItems.ItemId)
             {
@@ -128,8 +153,18 @@ namespace foodie_mvc.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OrderId"] = new SelectList(_context.Orders, "OrderId", "OrderId", OrderedItems.OrderId);
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", OrderedItems.ProductId);
+            ViewData["OrderId"] = new SelectList(
+                _context.Orders,
+                "OrderId",
+                "OrderId",
+                OrderedItems.OrderId
+            );
+            ViewData["ProductId"] = new SelectList(
+                _context.Products,
+                "ProductId",
+                "ProductId",
+                OrderedItems.ProductId
+            );
             return View(OrderedItems);
         }
 

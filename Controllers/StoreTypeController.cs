@@ -35,8 +35,7 @@ namespace foodie_mvc.Controllers
                 return NotFound();
             }
 
-            var storeType = await _context.StoreTypes
-                .FirstOrDefaultAsync(m => m.StoreTypeId == id);
+            var storeType = await _context.StoreTypes.FirstOrDefaultAsync(m => m.StoreTypeId == id);
             if (storeType == null)
             {
                 return NotFound();
@@ -58,7 +57,9 @@ namespace foodie_mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create([Bind("StoreTypeId,StoreType1,Active")] StoreType storeType)
+        public async Task<IActionResult> Create(
+            [Bind("StoreTypeId,StoreType1,Active")] StoreType storeType
+        )
         {
             if (ModelState.IsValid)
             {
@@ -92,7 +93,10 @@ namespace foodie_mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Edit(int id, [Bind("StoreTypeId,StoreType1,Active")] StoreType storeType)
+        public async Task<IActionResult> Edit(
+            int id,
+            [Bind("StoreTypeId,StoreType1,Active")] StoreType storeType
+        )
         {
             if (id != storeType.StoreTypeId)
             {
@@ -131,8 +135,7 @@ namespace foodie_mvc.Controllers
                 return NotFound();
             }
 
-            var storeType = await _context.StoreTypes
-                .FirstOrDefaultAsync(m => m.StoreTypeId == id);
+            var storeType = await _context.StoreTypes.FirstOrDefaultAsync(m => m.StoreTypeId == id);
             if (storeType == null)
             {
                 return NotFound();

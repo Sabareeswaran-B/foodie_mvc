@@ -71,7 +71,12 @@ namespace foodie_mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create([Bind("ProductId,ProductName,QuantityAvailable,StoreId,TypeId,Mrp,SpecialPrice,Active,DiscountId")] Product product)
+        public async Task<IActionResult> Create(
+            [Bind(
+                "ProductId,ProductName,QuantityAvailable,StoreId,TypeId,Mrp,SpecialPrice,Active,DiscountId"
+            )]
+                Product product
+        )
         {
             if (ModelState.IsValid)
             {
@@ -79,9 +84,24 @@ namespace foodie_mvc.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DiscountId"] = new SelectList(_context.Discounts, "DiscountId", "DiscountId", product.DiscountId);
-            ViewData["StoreId"] = new SelectList(_context.Stores, "StoreId", "StoreId", product.StoreId);
-            ViewData["TypeId"] = new SelectList(_context.ProductTypes, "TypeId", "TypeId", product.TypeId);
+            ViewData["DiscountId"] = new SelectList(
+                _context.Discounts,
+                "DiscountId",
+                "DiscountId",
+                product.DiscountId
+            );
+            ViewData["StoreId"] = new SelectList(
+                _context.Stores,
+                "StoreId",
+                "StoreId",
+                product.StoreId
+            );
+            ViewData["TypeId"] = new SelectList(
+                _context.ProductTypes,
+                "TypeId",
+                "TypeId",
+                product.TypeId
+            );
             return View(product);
         }
 
@@ -99,9 +119,24 @@ namespace foodie_mvc.Controllers
             {
                 return NotFound();
             }
-            ViewData["DiscountId"] = new SelectList(_context.Discounts, "DiscountId", "DiscountId", product.DiscountId);
-            ViewData["StoreId"] = new SelectList(_context.Stores, "StoreId", "StoreId", product.StoreId);
-            ViewData["TypeId"] = new SelectList(_context.ProductTypes, "TypeId", "TypeId", product.TypeId);
+            ViewData["DiscountId"] = new SelectList(
+                _context.Discounts,
+                "DiscountId",
+                "DiscountId",
+                product.DiscountId
+            );
+            ViewData["StoreId"] = new SelectList(
+                _context.Stores,
+                "StoreId",
+                "StoreId",
+                product.StoreId
+            );
+            ViewData["TypeId"] = new SelectList(
+                _context.ProductTypes,
+                "TypeId",
+                "TypeId",
+                product.TypeId
+            );
             return View(product);
         }
 
@@ -111,7 +146,13 @@ namespace foodie_mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,QuantityAvailable,StoreId,TypeId,Mrp,SpecialPrice,Active,DiscountId")] Product product)
+        public async Task<IActionResult> Edit(
+            int id,
+            [Bind(
+                "ProductId,ProductName,QuantityAvailable,StoreId,TypeId,Mrp,SpecialPrice,Active,DiscountId"
+            )]
+                Product product
+        )
         {
             if (id != product.ProductId)
             {
@@ -138,9 +179,24 @@ namespace foodie_mvc.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DiscountId"] = new SelectList(_context.Discounts, "DiscountId", "DiscountId", product.DiscountId);
-            ViewData["StoreId"] = new SelectList(_context.Stores, "StoreId", "StoreId", product.StoreId);
-            ViewData["TypeId"] = new SelectList(_context.ProductTypes, "TypeId", "TypeId", product.TypeId);
+            ViewData["DiscountId"] = new SelectList(
+                _context.Discounts,
+                "DiscountId",
+                "DiscountId",
+                product.DiscountId
+            );
+            ViewData["StoreId"] = new SelectList(
+                _context.Stores,
+                "StoreId",
+                "StoreId",
+                product.StoreId
+            );
+            ViewData["TypeId"] = new SelectList(
+                _context.ProductTypes,
+                "TypeId",
+                "TypeId",
+                product.TypeId
+            );
             return View(product);
         }
 

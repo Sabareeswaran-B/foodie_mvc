@@ -62,7 +62,9 @@ namespace foodie_mvc.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CartId,UserId,ProductId,Quantity,TotalPrice,Active")] Cart cart)
+        public async Task<IActionResult> Create(
+            [Bind("CartId,UserId,ProductId,Quantity,TotalPrice,Active")] Cart cart
+        )
         {
             if (ModelState.IsValid)
             {
@@ -70,7 +72,12 @@ namespace foodie_mvc.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", cart.ProductId);
+            ViewData["ProductId"] = new SelectList(
+                _context.Products,
+                "ProductId",
+                "ProductId",
+                cart.ProductId
+            );
             ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", cart.UserId);
             return View(cart);
         }
@@ -89,7 +96,12 @@ namespace foodie_mvc.Controllers
             {
                 return NotFound();
             }
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", cart.ProductId);
+            ViewData["ProductId"] = new SelectList(
+                _context.Products,
+                "ProductId",
+                "ProductId",
+                cart.ProductId
+            );
             ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", cart.UserId);
             return View(cart);
         }
@@ -100,7 +112,10 @@ namespace foodie_mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Edit(int id, [Bind("CartId,UserId,ProductId,Quantity,TotalPrice,Active")] Cart cart)
+        public async Task<IActionResult> Edit(
+            int id,
+            [Bind("CartId,UserId,ProductId,Quantity,TotalPrice,Active")] Cart cart
+        )
         {
             if (id != cart.CartId)
             {
@@ -127,7 +142,12 @@ namespace foodie_mvc.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", cart.ProductId);
+            ViewData["ProductId"] = new SelectList(
+                _context.Products,
+                "ProductId",
+                "ProductId",
+                cart.ProductId
+            );
             ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", cart.UserId);
             return View(cart);
         }

@@ -42,8 +42,9 @@ namespace foodie_mvc.Controllers
                 return NotFound();
             }
 
-            var orderStatus = await _context.OrderStatuses
-                .FirstOrDefaultAsync(m => m.StatusId == id);
+            var orderStatus = await _context.OrderStatuses.FirstOrDefaultAsync(
+                m => m.StatusId == id
+            );
             if (orderStatus == null)
             {
                 return NotFound();
@@ -65,7 +66,9 @@ namespace foodie_mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create([Bind("StatusId,StatusName,Active")] OrderStatus orderStatus)
+        public async Task<IActionResult> Create(
+            [Bind("StatusId,StatusName,Active")] OrderStatus orderStatus
+        )
         {
             if (ModelState.IsValid)
             {
@@ -99,7 +102,10 @@ namespace foodie_mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Edit(int id, [Bind("StatusId,StatusName,Active")] OrderStatus orderStatus)
+        public async Task<IActionResult> Edit(
+            int id,
+            [Bind("StatusId,StatusName,Active")] OrderStatus orderStatus
+        )
         {
             if (id != orderStatus.StatusId)
             {
@@ -138,8 +144,9 @@ namespace foodie_mvc.Controllers
                 return NotFound();
             }
 
-            var orderStatus = await _context.OrderStatuses
-                .FirstOrDefaultAsync(m => m.StatusId == id);
+            var orderStatus = await _context.OrderStatuses.FirstOrDefaultAsync(
+                m => m.StatusId == id
+            );
             if (orderStatus == null)
             {
                 return NotFound();

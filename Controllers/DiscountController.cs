@@ -35,8 +35,7 @@ namespace foodie_mvc.Controllers
                 return NotFound();
             }
 
-            var discount = await _context.Discounts
-                .FirstOrDefaultAsync(m => m.DiscountId == id);
+            var discount = await _context.Discounts.FirstOrDefaultAsync(m => m.DiscountId == id);
             if (discount == null)
             {
                 return NotFound();
@@ -58,7 +57,10 @@ namespace foodie_mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create([Bind("DiscountId,DiscountName,DiscountAmount,MaxDiscount,Validity,Active")] Discount discount)
+        public async Task<IActionResult> Create(
+            [Bind("DiscountId,DiscountName,DiscountAmount,MaxDiscount,Validity,Active")]
+                Discount discount
+        )
         {
             if (ModelState.IsValid)
             {
@@ -92,7 +94,11 @@ namespace foodie_mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Edit(int id, [Bind("DiscountId,DiscountName,DiscountAmount,MaxDiscount,Validity,Active")] Discount discount)
+        public async Task<IActionResult> Edit(
+            int id,
+            [Bind("DiscountId,DiscountName,DiscountAmount,MaxDiscount,Validity,Active")]
+                Discount discount
+        )
         {
             if (id != discount.DiscountId)
             {
@@ -131,8 +137,7 @@ namespace foodie_mvc.Controllers
                 return NotFound();
             }
 
-            var discount = await _context.Discounts
-                .FirstOrDefaultAsync(m => m.DiscountId == id);
+            var discount = await _context.Discounts.FirstOrDefaultAsync(m => m.DiscountId == id);
             if (discount == null)
             {
                 return NotFound();

@@ -23,7 +23,9 @@ namespace foodie_mvc.Controllers
         // GET: Order
         public async Task<IActionResult> Index()
         {
-            var foodieContext = _context.Orders.Include(o => o.OrderStatusNavigation).Include(o => o.User);
+            var foodieContext = _context.Orders
+                .Include(o => o.OrderStatusNavigation)
+                .Include(o => o.User);
             return View(await foodieContext.ToListAsync());
         }
 
@@ -52,7 +54,11 @@ namespace foodie_mvc.Controllers
         [Authorize]
         public IActionResult Create()
         {
-            ViewData["OrderStatus"] = new SelectList(_context.OrderStatuses, "StatusId", "StatusId");
+            ViewData["OrderStatus"] = new SelectList(
+                _context.OrderStatuses,
+                "StatusId",
+                "StatusId"
+            );
             ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId");
             return View();
         }
@@ -63,7 +69,9 @@ namespace foodie_mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create([Bind("OrderId,UserId,TotalPrice,OrderedAt,Active,OrderStatus")] Order order)
+        public async Task<IActionResult> Create(
+            [Bind("OrderId,UserId,TotalPrice,OrderedAt,Active,OrderStatus")] Order order
+        )
         {
             if (ModelState.IsValid)
             {
@@ -71,7 +79,12 @@ namespace foodie_mvc.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OrderStatus"] = new SelectList(_context.OrderStatuses, "StatusId", "StatusId", order.OrderStatus);
+            ViewData["OrderStatus"] = new SelectList(
+                _context.OrderStatuses,
+                "StatusId",
+                "StatusId",
+                order.OrderStatus
+            );
             ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", order.UserId);
             return View(order);
         }
@@ -90,7 +103,12 @@ namespace foodie_mvc.Controllers
             {
                 return NotFound();
             }
-            ViewData["OrderStatus"] = new SelectList(_context.OrderStatuses, "StatusId", "StatusId", order.OrderStatus);
+            ViewData["OrderStatus"] = new SelectList(
+                _context.OrderStatuses,
+                "StatusId",
+                "StatusId",
+                order.OrderStatus
+            );
             ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", order.UserId);
             return View(order);
         }
@@ -101,7 +119,10 @@ namespace foodie_mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Edit(int id, [Bind("OrderId,UserId,TotalPrice,OrderedAt,Active,OrderStatus")] Order order)
+        public async Task<IActionResult> Edit(
+            int id,
+            [Bind("OrderId,UserId,TotalPrice,OrderedAt,Active,OrderStatus")] Order order
+        )
         {
             if (id != order.OrderId)
             {
@@ -128,7 +149,12 @@ namespace foodie_mvc.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OrderStatus"] = new SelectList(_context.OrderStatuses, "StatusId", "StatusId", order.OrderStatus);
+            ViewData["OrderStatus"] = new SelectList(
+                _context.OrderStatuses,
+                "StatusId",
+                "StatusId",
+                order.OrderStatus
+            );
             ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", order.UserId);
             return View(order);
         }

@@ -61,7 +61,10 @@ namespace foodie_mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create([Bind("TransactionId,UserId,Amount,TransactionType,TransactionStatus,Active")] TransactionHistory transactionHistory)
+        public async Task<IActionResult> Create(
+            [Bind("TransactionId,UserId,Amount,TransactionType,TransactionStatus,Active")]
+                TransactionHistory transactionHistory
+        )
         {
             if (ModelState.IsValid)
             {
@@ -69,7 +72,12 @@ namespace foodie_mvc.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", transactionHistory.UserId);
+            ViewData["UserId"] = new SelectList(
+                _context.Users,
+                "UserId",
+                "UserId",
+                transactionHistory.UserId
+            );
             return View(transactionHistory);
         }
 
@@ -87,7 +95,12 @@ namespace foodie_mvc.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", transactionHistory.UserId);
+            ViewData["UserId"] = new SelectList(
+                _context.Users,
+                "UserId",
+                "UserId",
+                transactionHistory.UserId
+            );
             return View(transactionHistory);
         }
 
@@ -97,7 +110,11 @@ namespace foodie_mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Edit(int id, [Bind("TransactionId,UserId,Amount,TransactionType,TransactionStatus,Active")] TransactionHistory transactionHistory)
+        public async Task<IActionResult> Edit(
+            int id,
+            [Bind("TransactionId,UserId,Amount,TransactionType,TransactionStatus,Active")]
+                TransactionHistory transactionHistory
+        )
         {
             if (id != transactionHistory.TransactionId)
             {
@@ -124,7 +141,12 @@ namespace foodie_mvc.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", transactionHistory.UserId);
+            ViewData["UserId"] = new SelectList(
+                _context.Users,
+                "UserId",
+                "UserId",
+                transactionHistory.UserId
+            );
             return View(transactionHistory);
         }
 
