@@ -69,31 +69,9 @@ public class HomeController : Controller
                         BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public
                     )
             )
-            .Where(
-                m =>
-                    !m.GetCustomAttributes(
-                            typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute),
-                            true
-                        )
-                        .Any()
-            )
-            .Select(
-                x =>
-                    new
-                    {
-                        Controller = x.DeclaringType!.Name,
-                        Action = x.Name                        
-                    }
-            )
+            .Select(x => new { Controller = x.DeclaringType!.Name, Action = x.Name })
             .Where(w => w.Action == "Index")
-            .OrderBy(x => x.Controller)
-            .ThenBy(x => x.Action)
             .ToList();
-        
-        // foreach (var item in controlleractionlist)
-        // {
-        //     Console.WriteLine(item);
-        // }
 
         var users = (from u in _context.Users select u).Count();
         var adminUsers = (from au in _context.Users select au)

@@ -142,23 +142,46 @@
                             foreach (var item in controllers)
                             {
                                 string controller = item["Controller"]!.ToString().Replace("Controller", "");
-                                @* Console.WriteLine(controller); *@
-                                if (ViewContext.RouteData.Values["Controller"]!.ToString() == controller)
+                                if (controller == "Home")
                                 {
-                                    <li class="nav-item active">
-                                        <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="@controller"
-                                        asp-action="Index">@controller</a>
-                                    </li>
-                                }
-                                else
-                                {
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="@controller"
-                                        asp-action="Index">@controller</a>
-                                    </li>
+                                    if (ViewContext.RouteData.Values["Controller"]!.ToString() == controller)
+                                    {
+                                        <li class="nav-item active">
+                                            <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="@controller"
+                                asp-action="@item["Action"]">@controller</a>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="@controller"
+                                asp-action="@item["Action"]">@controller</a>
+                                        </li>
+                                    }
                                 }
                             }
-                        }                       
+                            foreach (var item in controllers)
+                            {
+                                string controller = item["Controller"]!.ToString().Replace("Controller", "");
+                                if (controller != "Home")
+                                {
+                                    if (ViewContext.RouteData.Values["Controller"]!.ToString() == controller)
+                                    {
+                                        <li class="nav-item active">
+                                            <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="@controller"
+                                asp-action="@item["Action"]">@controller</a>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="@controller"
+                                asp-action="@item["Action"]">@controller</a>
+                                        </li>
+                                    }
+                                }
+                            }
+                        }
 
                     </ul>
                 </div>
