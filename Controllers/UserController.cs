@@ -42,8 +42,7 @@ namespace foodie_mvc.Controllers
                 return NotFound();
             }
 
-            var user = await _context.Users
-                .FirstOrDefaultAsync(m => m.UserId == id);
+            var user = await _context.Users.FirstOrDefaultAsync(m => m.UserId == id);
             if (user == null)
             {
                 return NotFound();
@@ -64,7 +63,9 @@ namespace foodie_mvc.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,UserName,RegNo,PhoneNo,Balance,Active,UserRole,PassWord")] User user)
+        public async Task<IActionResult> Create(
+            [Bind("UserId,UserName,RegNo,PhoneNo,Balance,Active,UserRole,PassWord")] User user
+        )
         {
             if (ModelState.IsValid)
             {
@@ -98,7 +99,10 @@ namespace foodie_mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Edit(int id, [Bind("UserId,UserName,RegNo,PhoneNo,Balance,Active,UserRole,PassWord")] User user)
+        public async Task<IActionResult> Edit(
+            int id,
+            [Bind("UserId,UserName,RegNo,PhoneNo,Balance,Active,UserRole,PassWord")] User user
+        )
         {
             if (id != user.UserId)
             {
@@ -137,8 +141,7 @@ namespace foodie_mvc.Controllers
                 return NotFound();
             }
 
-            var user = await _context.Users
-                .FirstOrDefaultAsync(m => m.UserId == id);
+            var user = await _context.Users.FirstOrDefaultAsync(m => m.UserId == id);
             if (user == null)
             {
                 return NotFound();
